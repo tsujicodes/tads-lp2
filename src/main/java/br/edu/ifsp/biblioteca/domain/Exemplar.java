@@ -1,16 +1,16 @@
 package br.edu.ifsp.biblioteca.domain;
 
 public class Exemplar {
+
     private Long id;
     private String codigo;
-    private Livro livro;
     private EStatusExemplar status;
+    private Livro livro;
 
-    public Exemplar(Long id, String codigo, Livro livro, EStatusExemplar status){
-        this.id=id;
-        this.codigo=codigo;
-        this.livro=livro;
-        this.status=status;
+    public Exemplar(String codigo, Livro livro) {
+        this.codigo = codigo;
+        this.livro = livro;
+        this.status = EStatusExemplar.DISPONIVEL;
     }
 
     public Long getId() {
@@ -29,14 +29,6 @@ public class Exemplar {
         this.codigo = codigo;
     }
 
-    public Livro getLivro() {
-        return livro;
-    }
-
-    public void setLivro(Livro livro) {
-        this.livro = livro;
-    }
-
     public EStatusExemplar getStatus() {
         return status;
     }
@@ -45,14 +37,19 @@ public class Exemplar {
         this.status = status;
     }
 
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
     @Override
     public String toString() {
         return "Exemplar{" +
-                "id=" + id +
-                ", codigo='" + codigo + '\'' +
-                ", livro=" + livro +
+                "codigo='" + codigo + '\'' +
                 ", status=" + status +
                 '}';
     }
 }
-

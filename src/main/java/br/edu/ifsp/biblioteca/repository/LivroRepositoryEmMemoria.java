@@ -1,9 +1,13 @@
 package br.edu.ifsp.biblioteca.repository;
 
 import br.edu.ifsp.biblioteca.domain.Livro;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
+@Profile("memoria") //SABOUUUUR UNDAIA
 public class LivroRepositoryEmMemoria implements ILivroRepository {
 
     private final Map<Long, Livro> livros = new HashMap<Long, Livro>();
@@ -15,8 +19,6 @@ public class LivroRepositoryEmMemoria implements ILivroRepository {
         if (livro.getId() == null) {
             this.sequenciaId = this.sequenciaId + 1;
             livro.setId(this.sequenciaId);
-
-            //pre e pos incremento -->(++Oi) (Oi++)
         }
 
         this.livros.put(livro.getId(), livro);
@@ -26,59 +28,59 @@ public class LivroRepositoryEmMemoria implements ILivroRepository {
 
     @Override
     public List<Livro> listarTodos() {
+
         return new ArrayList<>(this.livros.values());
+
+//        List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
+//        return colecaoLivros;
+
+
+//        List<Livro> todosOsLivros = new ArrayList<>();
+//
+//        for (Livro livro : this.livros.values()) {
+//            todosOsLivros.add(livro);
+//        }
+//
+//        return todosOsLivros;
     }
 
     @Override
-    public Optional<Livro> buscarPorId(Long Id) {
-        return Optional.ofNullable(this.livros.get(Id));
-
-
-        //Livro l = this.livros.get(Id);
-        //
-        //  if (l == null) {
-        //return Optional.empty();
-        //}
-        //return Optional.of(l);
-        //}
+    public Optional<Livro> buscarPorId(Long id) {
+        return Optional.ofNullable(this.livros.get(id));
     }
+
     @Override
     public Optional<Livro> buscarPorIsbn(String isbn) {
 
-
-        //foreach
-        //para cada item livro(for) na lista colecaoLivros(each)
-       //  for(Livro livro: colecaoLivros) {
-       //     if (livro.getIsbn().equalsIgnoreCase(isbn))
-       //         return Optional.of(livro);
-       // }
-
-
         List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
 
-        for (int i = 0; i < colecaoLivros.size(); i++){
+        for (int i = 0; i < colecaoLivros.size(); i++) {
+
             Livro livro = colecaoLivros.get(i);
             String livroIsbn = livro.getIsbn();
 
-            if(livroIsbn.equalsIgnoreCase(isbn)){
+            if (livroIsbn.equalsIgnoreCase(isbn)) {
                 return Optional.of(livro);
             }
         }
 
-
-        return Optional.empty(); //retorna se n achar o fim do loop
+        return Optional.empty();
     }
 
     @Override
     public List<Livro> buscarPorTitulo(String titulo) {
 
-        List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
-        List<Livro> colecaoNova = new ArrayList<>();
-        for(Livro livro: colecaoLivros) {
-             if (livro.getTitulo().equalsIgnoreCase(titulo)){
-                 colecaoNova.add(livro);
-             }
+        List<Livro> encontrados = new ArrayList<>();
 
-        return colecaoNova;
+        for (Livro livro : this.livros.values()) {
+
+            String livroTitulo = livro.getTitulo().toLowerCase();
+
+            if (livroTitulo.contains(titulo.toLowerCase())) {
+                encontrados.add(livro);
+            }
+        }
+
+        return encontrados;
     }
 }

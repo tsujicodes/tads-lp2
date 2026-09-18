@@ -1,14 +1,14 @@
 package br.edu.ifsp.biblioteca.domain;
 
 public class Usuario {
+
     private Long id;
     private String nome;
     private String email;
 
-    public Usuario(Long id, String nome, String email){
-        this.id=id;
-        this.nome=nome;
-        this.email=email;
+    public Usuario(String nome, String email) {
+        this.nome = nome;
+        this.email = email;
     }
 
     public Long getId() {

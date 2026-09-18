@@ -7,14 +7,13 @@ import java.util.Optional;
 
 public interface ILivroRepository {
 
-    public Livro salvar(Livro livro);
+    Livro salvar(Livro livro);
 
     List<Livro> listarTodos();
 
-    public Optional<Livro> buscarPorId(Long Id);
+    Optional<Livro> buscarPorId(Long id);
 
-    public Optional<Livro> buscarPorIsbn(String isbn);
+    Optional<Livro> buscarPorIsbn(String isbn);
 
-    public List<Livro> buscarPorTitulo(String titulo);
-
+    List<Livro> buscarPorTitulo(String titulo);
 }
